@@ -1,30 +1,41 @@
 #!/usr/bin/python3
-"""Define a File storage"""
-from .. import base_model
+#models/FileStorge.py
+"""
+Define the filestorge class
+"""
+import json
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
-    """Represent a file storage"""
-
-    def __init__(self, filename):
-        """Initialize a file
-
-        """
-        self.filename = filename
-
-    def save(self, data):
-        """Method to save file
-
-        """
-        with open(self.filename, mode='w', encoding='utf-8') as f:
-            json.dump(data, f)
-
-    def load(self):
-        """Method to load file
-
-        """
+    __file_path="file.json"
+    __objects={}
+    def all(self):
+        return FileStorage.__objects
+    def new(self, obj):
+        class_name=obj.__class__.name
+        ins_id=obj.id
+        key =f"{class_name}.{ins_id}"
+        FileStorage.__objects[key]=obj
+    def save(self):
+        dic_t={}
+        for key, val in FileStorage.__objects.items():
+            dic_t[key]=val.to_dict()
+        with open(FileStorage.__file_path,encoding='utf-8') as f:
+            json.dump(dic_t,f)
+    def reload(self):
         try:
-            with open(self.filename, encoding='utf-8') as f:
-                return jason.load(f)
-        except:
-            FileNotFoundError("File Not Found Error")
+            with open(self.__file_path,ncoding='utf-8') as f:
+                ob=json.load(f)
+            for O in ob.values():
+                class_name=O["__class__"]
+                del O["__class__"]
+                self.new(eval(class_name)(**O))
+        except FileNotFoundError:
+            pass
