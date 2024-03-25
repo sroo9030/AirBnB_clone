@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Define a File storage"""
 import json
-import models
 
 
 class FileStorage:
@@ -43,9 +42,10 @@ class FileStorage:
                 data = json.load(f)
                 for key, value in data.items():
                     cls_name, obj_id = key.split('.')
-                    cls = getattr(models, cls_name)
-                    self.__objects[key] = cls(**value)
+                    from models.base_model import BaseModel
+                    self.__objects[key] = BaseModel(**value)
         except FileNotFoundError:
             pass
+
 
 storage = FileStorage()
