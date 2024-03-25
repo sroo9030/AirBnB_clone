@@ -1,41 +1,45 @@
 #!/usr/bin/python3
-#models/FileStorge.py
-"""
-Define the filestorge class
-"""
+"""Define a File storage"""
+from .. import BaseModel
 import json
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
 
 
 class FileStorage:
-    __file_path="file.json"
-    __objects={}
+    """Represent a file storage"""
+
+        __file_path = "file.json"
+        __objects = {}
+
     def all(self):
-        return FileStorage.__objects
+        """Methods to returns the dictionary
+
+        """
+        return self.__objects
+
     def new(self, obj):
-        class_name=obj.__class__.name
-        ins_id=obj.id
-        key =f"{class_name}.{ins_id}"
-        FileStorage.__objects[key]=obj
+        """Method set the object with the key
+
+        """
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.__objects[key] = obj
+
     def save(self):
-        dic_t={}
-        for key, val in FileStorage.__objects.items():
-            dic_t[key]=val.to_dict()
-        with open(FileStorage.__file_path,encoding='utf-8') as f:
-            json.dump(dic_t,f)
+        """Method to save file
+
+        """
+        with open(self.__file_path, mode='w', encoding='utf-8') as f:
+            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
+
     def reload(self):
+        """Method to load file
+
+        """
         try:
-            with open(self.__file_path,ncoding='utf-8') as f:
-                ob=json.load(f)
-            for O in ob.values():
-                class_name=O["__class__"]
-                del O["__class__"]
-                self.new(eval(class_name)(**O))
+             with open(self.__file_path, encoding='utf-8') as f:
+                data = json.load(f)
+                for key, value in data.items():
+                    cls_name, obj_id = key.split('.')
+                    cls = getattr(models, cls_name)
+                    self.__objects[key] = cls(**value)
         except FileNotFoundError:
             pass
