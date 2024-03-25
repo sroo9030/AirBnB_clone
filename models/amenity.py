@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 #models/amenity.py
 """ class amenity"""
-from models.base_model import BaseMode
+from models.base_model import BaseModel
 
 
-class Amenity(BaseModel):
+class  Amenity(BaseModel):
     """
     Represent amenity
     """
-    name=""
+   name=""
