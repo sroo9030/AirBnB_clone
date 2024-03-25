@@ -2,6 +2,6 @@
 
 from . import base_model
 from . import user
-from models.engine.file_storage import storage
+from models.engine import storage
 
 storage.reload()

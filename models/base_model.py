@@ -38,7 +38,7 @@ class BaseModel:
 
         """
         self.updated_at = datetime.now()
-        from models.engine.file_storage import storage
+        from models.engine import storage
         storage.new(self)
         storage.save()
 
