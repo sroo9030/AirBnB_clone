@@ -4,7 +4,7 @@ Define the BaseModel of the console
 """
 from uuid import uuid4
 from datetime import datetime
-from models.engine.file_storage import storage
+
 
 class BaseModel:
     """Represents the base class for other models in the application."""
@@ -38,6 +38,7 @@ class BaseModel:
 
         """
         self.updated_at = datetime.now()
+        from models.engine.file_storage import storage
         storage.new(self)
         storage.save()
 
