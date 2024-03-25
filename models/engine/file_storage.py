@@ -1,14 +1,18 @@
 #!/usr/bin/python3
 """Define a File storage"""
-from .. import BaseModel
 import json
+import models
 
 
 class FileStorage:
     """Represent a file storage"""
 
-        __file_path = "file.json"
-        __objects = {}
+    def __init__(self):
+        """Initialize FileStorage
+
+        """
+        self.__file_path = "file.json"
+        self.__objects = {}
 
     def all(self):
         """Methods to returns the dictionary
@@ -35,7 +39,7 @@ class FileStorage:
 
         """
         try:
-             with open(self.__file_path, encoding='utf-8') as f:
+            with open(self.__file_path, encoding='utf-8') as f:
                 data = json.load(f)
                 for key, value in data.items():
                     cls_name, obj_id = key.split('.')
@@ -43,3 +47,5 @@ class FileStorage:
                     self.__objects[key] = cls(**value)
         except FileNotFoundError:
             pass
+
+storage = FileStorage()
