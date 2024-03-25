@@ -17,7 +17,6 @@ class HBNBCommand(cmd.Cmd):
     classes = {'BaseModel': BaseModel, 'User': User, 'City': City,
                'Place': Place, 'Amenity': Amenity, 'Review': Review,
                'State': State}
-    not_allowed=("id", "created_at", "updated_at")
     @staticmethod()
     def do_quit():
         """quit"""
@@ -52,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
         ob_dic = storge.all()
         if not line:
             print("** class name missing **")
-        elif argu[0] not in HBNBCommand.classes:
+        elif argu[0] not in self.classes:
             print("** class doesn't exist **")
         elif len(argu) == 1:
                 print('** instance id missing **')
@@ -68,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
         ob_dic = storge.all()
         if not line:
             print("** class name missing **")
-        elif argu[0] not in HBNBCommand.classes:
+        elif argu[0] not in self.classes:
             print("** class doesn't exist **")
         elif len(argu) ==1:
             print("** instance id missing **")
@@ -83,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         based or not on the class name
         """
         argu=line.split("",1)
-        if argu[0] not in HBNBCommand.classes:
+        if argu[0] not in self.classes:
             print("** class doesn't exist **")
         else:
             obj=[]
@@ -101,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         argu=line.split()
         if not line:
             print("class name missing")
-        elif argu[0] not in HBNBCommand.__classes:
+        elif argu[0] not in self.classes:
             print("class doesn't exist")
         elif not len(argu) < 2:
             print("instance id missing")
