@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # models/place.py
 """ class place """
-from . import BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
