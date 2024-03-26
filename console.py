@@ -17,15 +17,15 @@ class HBNBCommand(cmd.Cmd):
     classes = {'BaseModel': BaseModel, 'User': User, 'City': City,
                'Place': Place, 'Amenity': Amenity, 'Review': Review,
                'State': State}
-    @staticmethod()
+    @staticmethod
     def do_quit():
         """quit"""
         return True
-    @staticmethod()
+    @staticmethod
     def do_EOF():
         """End Of File"""
         return True
-    @staticmethod()
+    @staticmethod
     def do_help():
         """help"""
         return True
@@ -130,4 +130,4 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
     
 if __name__ == "__main__":
-    HBNBCommand().cmdlooelifp()
+    HBNBCommand().cmdloop()
