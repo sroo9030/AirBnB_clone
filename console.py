@@ -29,6 +29,8 @@ class HBNBCommand(cmd.Cmd):
     def do_help():
         """help"""
         return True
+    def emptyline(self):
+        self.lastcmd = ""
     def do_create(self,line):
         """
         Creates a new instance of BaseModel, 
